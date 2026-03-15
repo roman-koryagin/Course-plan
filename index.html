@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План курса маникюра — 4 дня</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf6f0;
+  --mauve: #c26b78;
+  --rose: #e8b4b8;
+  --blush: #f9e8e8;
+  --sand: #f5e6d8;
+  --dusty: #d4878f;
+  --text: #3a2830;
+  --muted: #8a6570;
+  --white: #ffffff;
+  --accent: #e8c4c4;
+  --gold: #c9a86c;
+  --d1: #e8b4b8;
+  --d2: #b8d4e8;
+  --d3: #b8e8c8;
+  --d4: #e8d4b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, #fdeef0 0%, #f5d8dc 50%, #ead0c8 100%);
+  padding: 50px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(232,180,184,0.35), transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(201,168,108,0.2), transparent 70%);
+  border-radius: 50%;
+}
+.hero-icon { font-size: 44px; margin-bottom: 10px; display: block; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 7vw, 52px);
+  color: var(--mauve);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.stat {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-align: center;
+}
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--mauve); display: block; }
+.stat-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+/* DAY TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 16px 16px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--white);
+  border-bottom: 2px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 14px rgba(194,107,120,0.1);
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  border: 2px solid transparent;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  background: var(--blush);
+  color: var(--muted);
+}
+.tab.active { background: var(--mauve); color: white; border-color: var(--mauve); }
+.tab:not(.active):hover { background: var(--sand); color: var(--mauve); }
+
+/* PAGE */
+.page { display: none; animation: fadeIn .35s ease; padding: 0 0 80px; }
+.page.active { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* DAY HEADER */
+.day-header {
+  padding: 28px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.day-header::after {
+  content: attr(data-day);
+  position: absolute;
+  right: -10px; top: -20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 100px;
+  font-weight: 600;
+  opacity: 0.07;
+  color: var(--mauve);
+  pointer-events: none;
+}
+.day-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.badge-theory { background: #fdeef0; color: var(--mauve); border: 1.5px solid var(--rose); }
+.badge-practice { background: #e8f4e8; color: #3a7a3a; border: 1.5px solid #a0d0a0; }
+.day-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 5vw, 34px);
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.day-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.meta-tag {
+  background: var(--white);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* TIMELINE */
+.timeline { padding: 0 16px 20px; }
+.tl-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+  position: relative;
+}
+.tl-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 36px;
+  bottom: -6px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--rose), transparent);
+}
+.tl-time {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  background: var(--mauve);
+  margin-top: 4px;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: center;
+}
+.tl-time.break { background: var(--gold); }
+.tl-time.end { background: #5a9a5a; }
+.tl-content {
+  flex: 1;
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid var(--accent);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(194,107,120,0.05);
+}
+.tl-content.break-card { background: #fffdf5; border-color: #e8d8a0; }
+.tl-content.end-card { background: #f0f8f0; border-color: #a0d0a0; }
+.tl-title {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tl-time-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.tl-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.tl-body ul { margin: 6px 0 0 0; padding-left: 0; list-style: none; }
+.tl-body ul li {
+  padding: 3px 0 3px 18px;
+  position: relative;
+  font-size: 13px;
+}
+.tl-body ul li::before {
+  content: '🌸';
+  position: absolute;
+  left: 0;
+  font-size: 10px;
+  top: 5px;
+}
+.tl-body ul li.warn::before { content: '⚠️'; }
+.tl-body ul li.star::before { content: '⭐'; }
+.tl-body ul li.check::before { content: '✅'; }
+
+/* HIGHLIGHT */
+.tip-box {
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.tip-pink { background: #fdeef0; border-left: 3px solid var(--rose); color: var(--mauve); }
+.tip-green { background: #f0f8f0; border-left: 3px solid #7cb87c; color: #3a7a3a; }
+.tip-gold { background: #fffbe8; border-left: 3px solid var(--gold); color: #7a6020; }
+
+/* TOPICS GRID */
+.topics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 8px 0 0;
+}
+.topic-chip {
+  background: var(--blush);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mauve);
+  text-align: center;
+  border: 1px solid var(--accent);
+}
+
+/* SUMMARY CARD */
+.summary {
+  margin: 20px 16px 0;
+  background: linear-gradient(135deg, #fdeef0, #f5d8dc);
+  border-radius: 16px;
+  padding: 18px;
+  border: 1.5px solid var(--rose);
+}
+.summary h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--mauve);
+  margin-bottom: 10px;
+}
+.summary-items { display: flex; flex-direction: column; gap: 6px; }
+.summary-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+}
+.summary-dot {
+  width: 8px; height: 8px;
+  background: var(--mauve);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* TEST CARD */
+.test-card {
+  margin: 16px 16px 0;
+  background: var(--white);
+  border-radius: 16px;
+  border: 2px solid var(--gold);
+  padding: 18px;
+}
+.test-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.test-q {
+  background: #fffbe8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--gold);
+  color: var(--text);
+}
+
+/* CERT */
+.cert {
+  margin: 16px 16px 0;
+  background: linear-gradient(135deg, #fdf8f0, #f5e8d0);
+  border-radius: 16px;
+  border: 2px solid var(--gold);
+  padding: 22px;
+  text-align: center;
+}
+.cert-icon { font-size: 36px; margin-bottom: 8px; }
+.cert h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.cert p { font-size: 13px; color: var(--muted); }
+
+/* OVERVIEW PAGE */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 16px;
+}
+.ov-card {
+  border-radius: 16px;
+  padding: 16px;
+  border: 1.5px solid var(--accent);
+  cursor: pointer;
+  transition: transform .2s;
+}
+.ov-card:active { transform: scale(0.97); }
+.ov-day { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.ov-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.ov-time { font-size: 11px; color: var(--muted); }
+.ov-topics { margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; }
+.d1-bg { background: linear-gradient(135deg, #fdeef0, #f9d8dc); }
+.d2-bg { background: linear-gradient(135deg, #eef3fd, #d8e4f9); }
+.d3-bg { background: linear-gradient(135deg, #eefdf0, #d8f4dc); }
+.d4-bg { background: linear-gradient(135deg, #fdf8ee, #f4ead8); }
+.d1-color { color: #c26b78; }
+.d2-color { color: #4a70c0; }
+.d3-color { color: #3a8a4a; }
+.d4-color { color: #c09020; }
+
+/* SCROLL TOP */
+.scroll-top {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 40px; height: 40px;
+  background: var(--mauve);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: none;
+  z-index: 200;
+  box-shadow: 0 4px 14px rgba(194,107,120,0.4);
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--accent);
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-icon">👩‍🏫</span>
+  <h1>План курса<br>по маникюру</h1>
+  <p class="hero-sub">Полная программа обучения · 4 дня</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">дня</span></div>
+    <div class="stat"><span class="stat-num">22</span><span class="stat-label">часа</span></div>
+    <div class="stat"><span class="stat-num">1–2</span><span class="stat-label">ученика</span></div>
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">тем</span></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage(0,this)">📋 Обзор</button>
+  <button class="tab" onclick="showPage(1,this)">День 1 · Теория</button>
+  <button class="tab" onclick="showPage(2,this)">День 2 · Практика</button>
+  <button class="tab" onclick="showPage(3,this)">День 3 · Практика</button>
+  <button class="tab" onclick="showPage(4,this)">День 4 · Экзамен</button>
+</div>
+
+<!-- ОБЗОР -->
+<div class="page active" id="p0">
+  <div class="day-header">
+    <h2>Обзор курса</h2>
+    <p style="color:var(--muted);font-size:13px;margin-top:4px">Нажми на день чтобы открыть подробный план</p>
+  </div>
+  <div class="overview-grid">
+    <div class="ov-card d1-bg" onclick="showPage(1,document.querySelectorAll('.tab')[1])">
+      <div class="ov-day d1-color">День 1</div>
+      <div class="ov-title d1-color">Теория</div>
+      <div class="ov-time">🕐 3–4 часа</div>
+      <div class="ov-topics">Безопасность · Стерилизация · Анатомия ногтя · Инструменты · Заболевания</div>
+    </div>
+    <div class="ov-card d2-bg" onclick="showPage(2,document.querySelectorAll('.tab')[2])">
+      <div class="ov-day d2-color">День 2</div>
+      <div class="ov-title d2-color">Практика</div>
+      <div class="ov-time">🕐 12:00–18:00</div>
+      <div class="ov-topics">Снятие покрытия · Фрезы · Комбо-маникюр · Формы ногтей</div>
+    </div>
+    <div class="ov-card d3-bg" onclick="showPage(3,document.querySelectorAll('.tab')[3])">
+      <div class="ov-day d3-color">День 3</div>
+      <div class="ov-title d3-color">Практика</div>
+      <div class="ov-time">🕐 12:00–18:00</div>
+      <div class="ov-topics">Покрытие · База · Цвет · Топ · Архитектура · Апекс</div>
+    </div>
+    <div class="ov-card d4-bg" onclick="showPage(4,document.querySelectorAll('.tab')[4])">
+      <div class="ov-day d4-color">День 4</div>
+      <div class="ov-title d4-color">Экзамен</div>
+      <div class="ov-time">🕐 12:00–18:00</div>
+      <div class="ov-topics">Самостоятельный маникюр · Разбор ошибок · Тест · Сертификат</div>
+    </div>
+  </div>
+
+  <div class="summary" style="margin-top:16px">
+    <h3>🌸 Что получит ученик</h3>
+    <div class="summary-items">
+      <div class="summary-item"><div class="summary-dot"></div><div>Полная база теории: анатомия, заболевания, инструменты</div></div>
+      <div class="summary-item"><div class="summary-dot"></div><div>Практика снятия покрытия и обработки кутикулы</div></div>
+      <div class="summary-item"><div class="summary-dot"></div><div>Самостоятельное покрытие: база → цвет → топ</div></div>
+      <div class="summary-item"><div class="summary-dot"></div><div>Понимание архитектуры ногтя и апекса</div></div>
+      <div class="summary-item"><div class="summary-dot"></div><div>Готовность принять первых клиентов</div></div>
+      <div class="summary-item"><div class="summary-dot"></div><div>Сертификат об окончании курса 🎓</div></div>
+    </div>
+  </div>
+
+  <div style="padding:16px">
+    <div class="tip-gold">
+      <strong>💡 Совет преподавателю:</strong> Используй HTML-презентацию курса как наглядный материал на каждом занятии — ученица может смотреть схемы и фото прямо с телефона
+    </div>
+  </div>
+</div>
+
+<!-- ДЕНЬ 1 -->
+<div class="page" id="p1">
+  <div class="day-header" data-day="1">
+    <div class="day-badge badge-theory">📚 Теория</div>
+    <h2>День 1 — Теория</h2>
+    <div class="day-meta">
+      <span class="meta-tag">⏱ 3–4 часа</span>
+      <span class="meta-tag">📍 Гибкое время</span>
+      <span class="meta-tag">👩‍🎓 Без модели</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time">1</div>
+      <div class="tl-content">
+        <div class="tl-time-label">Блок 1 · 45 минут</div>
+        <div class="tl-title">😷 Внешний вид и рабочее место</div>
+        <div class="tl-body">
+          <ul>
+            <li>Маска, перчатки нитриловые vs виниловые, фартук, сменная обувь</li>
+            <li>Организация стола: освещение, проветривание, расположение инструментов</li>
+            <li>Разбор каждого оборудования: лампа, аппарат, пылесос</li>
+            <li class="star">Показать как правильно держать аппарат — опорный палец мизинец</li>
+          </ul>
+          <div class="tip-pink">Дай потрогать все инструменты руками — так запоминается лучше</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">2</div>
+      <div class="tl-content">
+        <div class="tl-time-label">Блок 2 · 45 минут</div>
+        <div class="tl-title">🦠 Дезинфекция и стерилизация</div>
+        <div class="tl-body">
+          <ul>
+            <li>Зачем это нужно и что будет если пропустить</li>
+            <li>Аламинол: пропорция — 10 мл на 1 л воды</li>
+            <li>3 шага: дезинфекция (15-20 мин) → промывка → сухожар (180°C, 60 мин)</li>
+            <li class="star">Практика: приготовить раствор, заложить инструменты в бокс</li>
+          </ul>
+          <div class="tip-green">Пусть сама запишет пропорции — это она должна знать наизусть</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time break">☕</div>
+      <div class="tl-content break-card">
+        <div class="tl-title">Перерыв · 15 минут</div>
+        <div class="tl-body">Чай, вода, отдых глаз</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">3</div>
+      <div class="tl-content">
+        <div class="tl-time-label">Блок 3 · 50 минут</div>
+        <div class="tl-title">💅 Строение ногтевого аппарата</div>
+        <div class="tl-body">
+          <ul>
+            <li>Разбор всех 15 элементов по схеме (открыть в HTML-презентации)</li>
+            <li class="warn">Точки вроста — нельзя трогать → онихолизис</li>
+            <li class="warn">Гипонихий — нельзя ковырять → онихолизис</li>
+            <li class="warn">Эпонихий — не кутикула! Нельзя обрезать</li>
+            <li>Матрикс и лунула — откуда растёт ноготь</li>
+            <li class="star">Попросить ученицу показать на своём пальце каждый элемент</li>
+          </ul>
+          <div class="tip-pink">Акцент на 3 главных запрета — они должны осесть в голове накрепко</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">4</div>
+      <div class="tl-content">
+        <div class="tl-time-label">Блок 4 · 40 минут</div>
+        <div class="tl-title">⚕️ Заболевания ногтей</div>
+        <div class="tl-body">
+          <ul>
+            <li>Разбор каждого по фото из презентации</li>
+            <li class="warn">Заразные: онихомикоз, синегнойная палочка, бородавки — не работать!</li>
+            <li>Не заразные но тоже нельзя: онихолизис, онихорексис, псориаз</li>
+            <li class="star">Игра: показываешь фото — ученица называет и говорит можно ли работать</li>
+          </ul>
+          <div class="tip-gold">Это важнейший раздел для безопасности клиента — не торопись</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">5</div>
+      <div class="tl-content">
+        <div class="tl-time-label">Блок 5 · 30 минут</div>
+        <div class="tl-title">🔧 Инструменты и материалы</div>
+        <div class="tl-body">
+          <ul>
+            <li>Виды фрез: алмазные (кожа) vs твёрдосплавные (материал)</li>
+            <li>Цвета насечек: жёлтая → красная ⭐ → синяя → зелёная</li>
+            <li>Формы: пламя, кукуруза, конус, шар</li>
+            <li>Базы: жёсткая / средне-жёсткая (rubber) / эластичная</li>
+            <li>Топы, праймер, дигидратор, обезжириватель — что для чего</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time end">✓</div>
+      <div class="tl-content end-card">
+        <div class="tl-title">🎯 Итог дня</div>
+        <div class="tl-body">
+          <ul>
+            <li class="check">Задать 5 вопросов по пройденному материалу</li>
+            <li class="check">Домашнее задание: выучить 15 элементов ногтя</li>
+            <li class="check">Предложить ещё раз прочитать презентацию дома</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ДЕНЬ 2 -->
+<div class="page" id="p2">
+  <div class="day-header" data-day="2">
+    <div class="day-badge badge-practice">✂️ Практика</div>
+    <h2>День 2 — Снятие и маникюр</h2>
+    <div class="day-meta">
+      <span class="meta-tag">⏱ 12:00–18:00</span>
+      <span class="meta-tag">👩‍🦰 Нужна модель</span>
+      <span class="meta-tag">🔧 Аппарат</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">12:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">12:00–13:00 · 1 час</div>
+        <div class="tl-title">🔧 Разбор фрез и аппарата</div>
+        <div class="tl-body">
+          <ul>
+            <li>Повторение: какая фреза для чего</li>
+            <li>Обороты: 35 000 → снятие, 15 000 → кутикула, 5 000 → шлифовка</li>
+            <li>Зоны фрезы: носик / щёчка / пузико</li>
+            <li class="star">Показ на своей руке: хват, угол, давление, опорный мизинец</li>
+            <li class="warn">Объяснить почему нельзя давить — ожог ногтевого ложа</li>
+          </ul>
+          <div class="tip-pink">Пусть подержит включённый аппарат и почувствует обороты на своём ногте</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">13:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">13:00–14:30 · 1.5 часа</div>
+        <div class="tl-title">💅 Снятие покрытия на модели</div>
+        <div class="tl-body">
+          <ul>
+            <li>Сначала смотришь как ты снимаешь — ученица наблюдает</li>
+            <li>Затем ученица пробует сама на 2-3 пальцах под контролем</li>
+            <li>Контроль: давление, угол фрезы, не заходить на кожу</li>
+            <li class="star">После снятия — проверить ноготь: не должно быть перегрева и царапин</li>
+          </ul>
+          <div class="tip-gold">На этом этапе главное — скорость не важна. Важна безопасность</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time break">🍽️</div>
+      <div class="tl-content break-card">
+        <div class="tl-title">Обед · 30 минут · 14:30–15:00</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">15:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">15:00–16:30 · 1.5 часа</div>
+        <div class="tl-title">✂️ Комбинированный маникюр</div>
+        <div class="tl-body">
+          <ul>
+            <li>Апельсиновой палочкой — отодвинуть кутикулу, раскрыть карман</li>
+            <li>Фреза 15 000: убрать птеригий FWD влево → RW вправо</li>
+            <li>Срез кутикулы ножницами/кусачками</li>
+            <li>Фреза RW 5 000: шлифовка</li>
+            <li class="star">Ученица делает 1 руку самостоятельно</li>
+          </ul>
+          <div class="tip-green">Хвали за правильные движения — это мотивирует учиться дальше</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">16:30</div>
+      <div class="tl-content">
+        <div class="tl-time-label">16:30–17:30 · 1 час</div>
+        <div class="tl-title">📐 Формы ногтей</div>
+        <div class="tl-body">
+          <ul>
+            <li>Пропорции: безымянный = указательный, средний +1–1,5 мм</li>
+            <li>Боковая и центральная оси</li>
+            <li>Отработка форм на типсах: квадрат → скво-овал → овал → миндаль</li>
+            <li class="star">Ученица опиливает форму на модели</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time end">✓</div>
+      <div class="tl-content end-card">
+        <div class="tl-time-label">17:30–18:00</div>
+        <div class="tl-title">🎯 Разбор дня</div>
+        <div class="tl-body">
+          <ul>
+            <li class="check">Что получилось хорошо — обязательно отметить</li>
+            <li class="check">Над чем работать дома (типсы + пилка)</li>
+            <li class="check">Домашнее задание: потренировать формы на типсах</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ДЕНЬ 3 -->
+<div class="page" id="p3">
+  <div class="day-header" data-day="3">
+    <div class="day-badge badge-practice">🎨 Практика</div>
+    <h2>День 3 — Покрытие</h2>
+    <div class="day-meta">
+      <span class="meta-tag">⏱ 12:00–18:00</span>
+      <span class="meta-tag">👩‍🦰 Нужна модель</span>
+      <span class="meta-tag">💅 Гель-лаки</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">12:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">12:00–13:00 · 1 час</div>
+        <div class="tl-title">🧴 Теория покрытия</div>
+        <div class="tl-body">
+          <ul>
+            <li>Полный порядок: дигидратор → праймер → база → выравнивание → цвет → топ</li>
+            <li>Дигидратор — только при влажной пластине</li>
+            <li>Праймер — 2-3 мазка на кончик</li>
+            <li>Разница баз: жёсткая / rubber / эластичная — когда какую</li>
+            <li>Топ с липким слоем vs без — как убирать</li>
+            <li class="warn">Жжение в лампе — вынуть руку, остудить, досушить</li>
+          </ul>
+          <div class="tip-pink">Покажи разницу консистенций баз — пусть сама потрогает</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">13:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">13:00–14:30 · 1.5 часа</div>
+        <div class="tl-title">💅 Полный маникюр на модели</div>
+        <div class="tl-body">
+          <ul>
+            <li>Ученица делает полный маникюр: обработка + покрытие</li>
+            <li>Ты рядом — подсказываешь но не делаешь за неё</li>
+            <li class="star">Акцент на аккуратность под кутикулой</li>
+            <li>Проверить: нет ли пузырей, подтёков, пропусков</li>
+          </ul>
+          <div class="tip-green">Пусть сама замечает свои ошибки — задавай наводящие вопросы</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time break">🍽️</div>
+      <div class="tl-content break-card">
+        <div class="tl-title">Обед · 30 минут · 14:30–15:00</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">15:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">15:00–16:30 · 1.5 часа</div>
+        <div class="tl-title">🏛️ Архитектура и апекс</div>
+        <div class="tl-body">
+          <ul>
+            <li>Апекс — наивысшая точка ногтя. На коротких — центр 2-й части, на длинных — граница 1-й и 2-й</li>
+            <li>Выравнивание — не доп. услуга, а обязательный этап</li>
+            <li class="warn">Нельзя перенашивать — не более 3-4 недель</li>
+            <li class="star">Отработка на типсах: наносим гель, выстраиваем апекс, полируем</li>
+          </ul>
+          <div class="tip-gold">Покажи на своих ногтях как выглядит правильный и неправильный апекс</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">16:30</div>
+      <div class="tl-content">
+        <div class="tl-time-label">16:30–17:30 · 1 час</div>
+        <div class="tl-title">🌿 Работа с гелем и акригелем</div>
+        <div class="tl-body">
+          <ul>
+            <li>Самовыравнивающийся гель — молочный: как наносить без перегрева</li>
+            <li>Акригель — не печёт, для укрепления и наращивания</li>
+            <li class="star">Ученица пробует укрепить 2-3 ногтя акригелем</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time end">✓</div>
+      <div class="tl-content end-card">
+        <div class="tl-time-label">17:30–18:00</div>
+        <div class="tl-title">🎯 Разбор дня</div>
+        <div class="tl-body">
+          <ul>
+            <li class="check">Оценить работу — конкретно: что хорошо, что улучшить</li>
+            <li class="check">Домашнее задание: сделать покрытие себе самостоятельно</li>
+            <li class="check">Подготовиться к завтрашнему экзамену</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ДЕНЬ 4 -->
+<div class="page" id="p4">
+  <div class="day-header" data-day="4">
+    <div class="day-badge" style="background:#fff8e8;color:#c09020;border:1.5px solid var(--gold)">🎓 Экзамен</div>
+    <h2>День 4 — Итоговый день</h2>
+    <div class="day-meta">
+      <span class="meta-tag">⏱ 12:00–18:00</span>
+      <span class="meta-tag">👩‍🦰 Нужна модель</span>
+      <span class="meta-tag">🎓 Сертификат</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">12:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">12:00–14:00 · 2 часа</div>
+        <div class="tl-title">💅 Самостоятельный маникюр</div>
+        <div class="tl-body">
+          <ul>
+            <li class="star">Ученица делает полный маникюр от А до Я — без подсказок</li>
+            <li>Порядок: антисептик → осмотр → снятие → обработка → опил → покрытие → топ</li>
+            <li>Ты только наблюдаешь, фиксируешь ошибки</li>
+            <li class="warn">Не вмешивайся — пусть решает сама. Это итоговая работа</li>
+          </ul>
+          <div class="tip-gold">Сделай фото готовой работы — это первая самостоятельная работа ученицы!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time break">🍽️</div>
+      <div class="tl-content break-card">
+        <div class="tl-title">Обед · 30 минут · 14:00–14:30</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">14:30</div>
+      <div class="tl-content">
+        <div class="tl-time-label">14:30–16:00 · 1.5 часа</div>
+        <div class="tl-title">🔍 Разбор итоговой работы</div>
+        <div class="tl-body">
+          <ul>
+            <li class="check">Сначала ты говоришь что получилось хорошо (обязательно!)</li>
+            <li>Затем разбираешь ошибки — конструктивно, без критики</li>
+            <li>Работа над конкретными ошибками на типсах</li>
+            <li class="star">Как общаться с клиентом, назначать цену, развиваться дальше</li>
+          </ul>
+          <div class="tip-green">Важно: ученица должна уйти с уверенностью, а не с сомнениями</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time" style="font-size:8px">16:00</div>
+      <div class="tl-content">
+        <div class="tl-time-label">16:00–17:00 · 1 час</div>
+        <div class="tl-title">📝 Итоговый тест</div>
+        <div class="tl-body">Устный экзамен по всем темам курса:</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="test-card">
+    <h3>🎓 Вопросы для экзамена</h3>
+    <div class="test-q">Покажи на своём пальце: где кутикула, где эпонихий, где птеригий?</div>
+    <div class="test-q">Что такое гипонихий и почему его нельзя трогать?</div>
+    <div class="test-q">На фото — что за заболевание? Можно ли работать?</div>
+    <div class="test-q">В какой последовательности делается покрытие? (назови все 15 шагов)</div>
+    <div class="test-q">Какие обороты при снятии? При кутикуле? При шлифовке?</div>
+    <div class="test-q">Какую базу выбрать для тонких травмированных ногтей?</div>
+    <div class="test-q">Пропорция раствора аламинол? Режим сухожара?</div>
+    <div class="test-q">Формула идеальных пропорций ногтей?</div>
+  </div>
+
+  <div class="timeline" style="margin-top:16px">
+    <div class="tl-item">
+      <div class="tl-time end">🎓</div>
+      <div class="tl-content end-card">
+        <div class="tl-time-label">17:00–18:00</div>
+        <div class="tl-title">🌸 Завершение курса</div>
+        <div class="tl-body">
+          <ul>
+            <li class="check">Обратная связь: что понравилось, что можно улучшить</li>
+            <li class="check">Советы по дальнейшему развитию и первым клиентам</li>
+            <li class="star">Вручение сертификата + фото на память</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cert">
+    <div class="cert-icon">🏆</div>
+    <h3>Сертификат об окончании курса</h3>
+    <p>Базовый курс по маникюру успешно пройден · 4 дня · 22 часа</p>
+  </div>
+
+</div>
+
+<footer>🌸 План курса по маникюру · 4 дня обучения</footer>
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showPage(idx, btn) {
+  document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('active', i === idx));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+// overview cards click
+document.querySelectorAll('.ov-card').forEach((card, i) => {
+  card.onclick = () => {
+    const tabs = document.querySelectorAll('.tab');
+    showPage(i+1, tabs[i+1]);
+  };
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
+</script>
+</body>
+</html>
